@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4361CC"
+    tools:context=".MainActivity">
+
+    <!-- DISPLAY -->
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FFFFFF"
+        android:hint="0"
+        android:inputType="numberDecimal"
+        android:gravity="end|center_vertical"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- RIGA 1: AC DEL % / log10 x^y √x -->
+    <Button
+        android:id="@+id/btnAC"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="AC"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <Button
+        android:id="@+id/btnDel"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="DEL"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/btnAC"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <Button
+        android:id="@+id/btnPercent"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="%"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/btnDel"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <Button
+        android:id="@+id/btnDiv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="/"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/btnPercent"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <Button
+        android:id="@+id/btnLog10"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="log10"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/btnDiv"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <Button
+        android:id="@+id/btnPow"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="x^y"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/btnLog10"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <Button
+        android:id="@+id/btnSqrt"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="√x"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnPow"
+        app:layout_constraintTop_toBottomOf="@id/editTextNumber" />
+
+    <!-- RIGA 2: 7 8 9 × 1/x x! (vuoto) -->
+    <Button
+        android:id="@+id/btn7"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="7"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAC" />
+
+    <Button
+        android:id="@+id/btn8"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="8"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/btn7"
+        app:layout_constraintTop_toBottomOf="@id/btnDel" />
+
+    <Button
+        android:id="@+id/btn9"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="9"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/btn8"
+        app:layout_constraintTop_toBottomOf="@id/btnPercent" />
+
+    <Button
+        android:id="@+id/btnMul"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="×"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/btn9"
+        app:layout_constraintTop_toBottomOf="@id/btnDiv" />
+
+    <Button
+        android:id="@+id/btnReciprocal"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="1/x"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/btnMul"
+        app:layout_constraintTop_toBottomOf="@id/btnLog10" />
+
+    <Button
+        android:id="@+id/btnFactorial"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="x!"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnReciprocal"
+        app:layout_constraintTop_toBottomOf="@id/btnPow" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
