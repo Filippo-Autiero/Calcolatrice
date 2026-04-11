@@ -1,154 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
+    android:id="@+id/principale"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F2C8C8">
 
+    <!-- DISPLAY -->
     <EditText
         android:id="@+id/display"
         android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
         android:gravity="end|center_vertical"
-        android:hint="Display della calcolatrice"
+        android:hint="0"
         android:inputType="numberDecimal"
-        android:textSize="24sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintStart_toEndOf="@id/log10"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <!-- COLONNA SINISTRA -->
     <Button
         android:id="@+id/log10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="68dp"
+        android:layout_margin="4dp"
         android:text="log10"
-        app:layout_constraintEnd_toStartOf="@id/potenza"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintEnd_toStartOf="@id/t7"
+        app:layout_constraintHeight_percent="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/display" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/potenza"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="68dp"
+        android:layout_margin="4dp"
         android:text="x^y"
-        app:layout_constraintEnd_toStartOf="@id/radice"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/log10"
-        app:layout_constraintTop_toBottomOf="@id/display" />
+        app:layout_constraintEnd_toStartOf="@id/t7"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/log10" />
 
     <Button
         android:id="@+id/radice"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="68dp"
+        android:layout_margin="4dp"
         android:text="√x"
-        app:layout_constraintEnd_toStartOf="@id/reciproco"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/potenza"
-        app:layout_constraintTop_toBottomOf="@id/display" />
+        app:layout_constraintEnd_toStartOf="@id/t4"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/potenza" />
 
     <Button
         android:id="@+id/reciproco"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="68dp"
+        android:layout_margin="4dp"
         android:text="1/x"
-        app:layout_constraintEnd_toStartOf="@id/fattoriale"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/radice"
-        app:layout_constraintTop_toBottomOf="@id/display" />
+        app:layout_constraintEnd_toStartOf="@id/t1"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radice" />
 
     <Button
         android:id="@+id/fattoriale"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="68dp"
+        android:layout_margin="4dp"
         android:text="x!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/reciproco"
-        app:layout_constraintTop_toBottomOf="@id/display" />
+        app:layout_constraintEnd_toStartOf="@id/t0"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reciproco" />
 
+    <!-- RIGA 1: 7 8 9 DEL ÷ -->
     <Button
         android:id="@+id/t7"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="7"
         app:layout_constraintEnd_toStartOf="@id/t8"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/log10" />
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/log10"
+        app:layout_constraintTop_toBottomOf="@id/display" />
 
     <Button
         android:id="@+id/t8"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="8"
         app:layout_constraintEnd_toStartOf="@id/t9"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t7"
-        app:layout_constraintTop_toBottomOf="@id/potenza" />
+        app:layout_constraintTop_toBottomOf="@id/display" />
 
     <Button
         android:id="@+id/t9"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="9"
-        app:layout_constraintEnd_toStartOf="@id/diviso"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintEnd_toStartOf="@id/elimina"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t8"
-        app:layout_constraintTop_toBottomOf="@id/radice" />
+        app:layout_constraintTop_toBottomOf="@id/display" />
+
+    <Button
+        android:id="@+id/elimina"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:text="DEL"
+        app:layout_constraintEnd_toStartOf="@id/diviso"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/t9"
+        app:layout_constraintTop_toBottomOf="@id/display" />
 
     <Button
         android:id="@+id/diviso"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="/"
-        app:layout_constraintEnd_toStartOf="@id/per"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/t9"
-        app:layout_constraintTop_toBottomOf="@id/reciproco" />
-
-    <Button
-        android:id="@+id/per"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:text="X"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/diviso"
-        app:layout_constraintTop_toBottomOf="@id/fattoriale" />
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/elimina"
+        app:layout_constraintTop_toBottomOf="@id/display" />
 
+    <!-- RIGA 2: 4 5 6 C × -->
     <Button
         android:id="@+id/t4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="4"
         app:layout_constraintEnd_toStartOf="@id/t5"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/potenza"
         app:layout_constraintTop_toBottomOf="@id/t7" />
 
     <Button
         android:id="@+id/t5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="5"
         app:layout_constraintEnd_toStartOf="@id/t6"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t4"
         app:layout_constraintTop_toBottomOf="@id/t8" />
 
@@ -156,54 +160,55 @@
         android:id="@+id/t6"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="6"
-        app:layout_constraintEnd_toStartOf="@id/meno"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintEnd_toStartOf="@id/cancella"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t5"
         app:layout_constraintTop_toBottomOf="@id/t9" />
-
-    <Button
-        android:id="@+id/meno"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:text="-"
-        app:layout_constraintEnd_toStartOf="@id/cancella"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/t6"
-        app:layout_constraintTop_toBottomOf="@id/diviso" />
 
     <Button
         android:id="@+id/cancella"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/meno"
-        app:layout_constraintTop_toBottomOf="@id/per" />
+        app:layout_constraintEnd_toStartOf="@id/per"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/t6"
+        app:layout_constraintTop_toBottomOf="@id/elimina" />
 
+    <Button
+        android:id="@+id/per"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:text="X"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/cancella"
+        app:layout_constraintTop_toBottomOf="@id/diviso" />
+
+    <!-- RIGA 3: 1 2 3 + − -->
     <Button
         android:id="@+id/t1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="1"
         app:layout_constraintEnd_toStartOf="@id/t2"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/reciproco"
         app:layout_constraintTop_toBottomOf="@id/t4" />
 
     <Button
         android:id="@+id/t2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="2"
         app:layout_constraintEnd_toStartOf="@id/t3"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t1"
         app:layout_constraintTop_toBottomOf="@id/t5" />
 
@@ -211,10 +216,10 @@
         android:id="@+id/t3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="3"
         app:layout_constraintEnd_toStartOf="@id/piu"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t2"
         app:layout_constraintTop_toBottomOf="@id/t6" />
 
@@ -222,55 +227,67 @@
         android:id="@+id/piu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="4dp"
         android:text="+"
-        app:layout_constraintEnd_toStartOf="@id/elimina"
-        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintEnd_toStartOf="@id/meno"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t3"
-        app:layout_constraintTop_toBottomOf="@id/meno" />
-
-    <Button
-        android:id="@+id/elimina"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:text="DEL"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.12"
-        app:layout_constraintStart_toEndOf="@id/piu"
         app:layout_constraintTop_toBottomOf="@id/cancella" />
 
-    <!-- ══════════════════════════════════════════════════════════
-         RIGA 4: t0  virgola  uguale (largo)
-         ══════════════════════════════════════════════════════════ -->
+    <Button
+        android:id="@+id/meno"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:text="-"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/piu"
+        app:layout_constraintTop_toBottomOf="@id/per" />
+
+    <!-- RIGA 4: 0 . = + -->
     <Button
         android:id="@+id/t0"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
         android:text="0"
         app:layout_constraintEnd_toStartOf="@id/virgola"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/fattoriale"
         app:layout_constraintTop_toBottomOf="@id/t1" />
 
     <Button
         android:id="@+id/virgola"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
         android:text="."
         app:layout_constraintEnd_toStartOf="@id/uguale"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/t0"
         app:layout_constraintTop_toBottomOf="@id/t2" />
 
     <Button
         android:id="@+id/uguale"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
         android:text="="
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/meno2"
+        app:layout_constraintHeight_percent="0.18"
         app:layout_constraintStart_toEndOf="@id/virgola"
-        app:layout_constraintTop_toBottomOf="@id/piu" />
+        app:layout_constraintTop_toBottomOf="@id/t3" />
+
+    <Button
+        android:id="@+id/meno2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"
+        android:text="+"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintStart_toEndOf="@id/uguale"
+        app:layout_constraintTop_toBottomOf="@id/meno" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
