@@ -9,9 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private EditText display;
-    private String primoNumero = "";
-    private String operatore = "";
-    private boolean nuovoNumero = false;
+
+    // Stato della calcolatrice
+    private double primoNumero     = 0;
+    private String operatore       = "";    // "", "+", "-", "X", "/", "^"
+    private boolean aspettaSecondo = false; // l'utente deve ancora digitare il 2° numero
+    private boolean dopoUguale     = false; // abbiamo appena mostrato un risultato
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,227 +22,187 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         display = findViewById(R.id.display);
+        if (display != null) display.setFocusable(false);
 
-        if (display != null) {
-            display.setFocusable(false);
-        }
-
-        // NUMERI
-        int[] numeri = {
+        // Cifre
+        int[] idNumeri = {
                 R.id.t0, R.id.t1, R.id.t2, R.id.t3, R.id.t4,
                 R.id.t5, R.id.t6, R.id.t7, R.id.t8, R.id.t9
         };
-
-        for (int id : numeri) {
+        for (int id : idNumeri) {
             Button b = findViewById(id);
-            if (b != null) {
-                b.setOnClickListener(v -> {
-                    if (nuovoNumero) {
-                        display.setText("");
-                        nuovoNumero = false;
-                    }
-                    display.append(b.getText().toString());
-                });
-            }
+            if (b == null) continue;
+            b.setOnClickListener(v -> premiCifra(b.getText().toString()));
         }
 
-        // VIRGOLA
-        Button virgola = findViewById(R.id.virgola);
-        if (virgola != null) {
-            virgola.setOnClickListener(v -> {
-                if (nuovoNumero) {
-                    display.setText("0.");
-                    nuovoNumero = false;
-                    return;
-                }
-                String testo = display.getText().toString();
-                if (!testo.contains(".")) {
-                    if (testo.isEmpty()) {
-                        display.setText("0.");
-                    } else {
-                        display.append(".");
-                    }
-                }
-            });
+        // Virgola
+        Button btnVirgola = findViewById(R.id.virgola);
+        if (btnVirgola != null) btnVirgola.setOnClickListener(v -> premiVirgola());
+
+        // Operatori
+        int[]    idOp = { R.id.piu, R.id.meno, R.id.per, R.id.diviso, R.id.potenza };
+        String[] nomi = { "+",      "-",       "X",      "/",         "^"          };
+        for (int i = 0; i < idOp.length; i++) {
+            Button b = findViewById(idOp[i]);
+            if (b == null) continue;
+            final String op = nomi[i];
+            b.setOnClickListener(v -> premiOperatore(op));
         }
 
-        // OPERATORI
-        setOperatore(R.id.piu, "+");
-        setOperatore(R.id.meno, "-");
-        setOperatore(R.id.per, "X");
-        setOperatore(R.id.diviso, "/");
-        setOperatore(R.id.potenza, "^");
+        // Uguale
+        Button btnUguale = findViewById(R.id.uguale);
+        if (btnUguale != null) btnUguale.setOnClickListener(v -> premiUguale());
 
-        // UGUALE
-        Button uguale = findViewById(R.id.uguale);
-        if (uguale != null) {
-            uguale.setOnClickListener(v -> calcola());
+        // Cancella tutto
+        Button btnCancella = findViewById(R.id.cancella);
+        if (btnCancella != null) btnCancella.setOnClickListener(v -> reset());
+
+        //  Backspace
+        Button btnElimina = findViewById(R.id.elimina);
+        if (btnElimina != null) btnElimina.setOnClickListener(v -> premiBack());
+    }
+
+
+    private void premiCifra(String cifra) {
+        // Dopo un risultato: nuovo calcolo da zero
+        if (dopoUguale) {
+            display.setText(cifra.equals("0") ? "0" : cifra);
+            dopoUguale     = false;
+            aspettaSecondo = false;
+            return;
         }
 
-        // RADICE
-        Button radice = findViewById(R.id.radice);
-        if (radice != null) {
-            radice.setOnClickListener(v -> {
-                Double n = getNumero();
-                if (n == null || n < 0) {
-                    errore();
-                    return;
-                }
-                display.setText("√(" + n + ") = " + formatta(Math.sqrt(n)));
-                nuovoNumero = true;
-            });
+        if (aspettaSecondo) {
+            // Inizia il secondo operando
+            display.setText(cifra.equals("0") ? "0" : cifra);
+            aspettaSecondo = false;
+            return;
         }
 
-        // RECIPROCO
-        Button reciproco = findViewById(R.id.reciproco);
-        if (reciproco != null) {
-            reciproco.setOnClickListener(v -> {
-                Double n = getNumero();
-                if (n == null || n == 0) {
-                    errore();
-                    return;
-                }
-                display.setText("1/(" + n + ") = " + formatta(1.0 / n));
-                nuovoNumero = true;
-            });
-        }
+        String attuale = display.getText().toString();
 
-        // FATTORIALE
-        Button fattoriale = findViewById(R.id.fattoriale);
-        if (fattoriale != null) {
-            fattoriale.setOnClickListener(v -> {
-                Double n = getNumero();
-                if (n == null || n < 0 || n != Math.floor(n) || n > 20) {
-                    errore();
-                    return;
-                }
-                display.setText(n.intValue() + "! = " + fattoriale(n.intValue()));
-                nuovoNumero = true;
-            });
-        }
+        // Sostituire "0" iniziale, ma non "0."
+        if (attuale.equals("0") && !cifra.equals("0")) { display.setText(cifra); return; }
+        if (attuale.equals("0") &&  cifra.equals("0")) return; // doppio zero inutile
 
-        // LOG10
-        Button log10 = findViewById(R.id.log10);
-        if (log10 != null) {
-            log10.setOnClickListener(v -> {
-                Double n = getNumero();
-                if (n == null || n <= 0) {
-                    errore();
-                    return;
-                }
-                display.setText("log(" + n + ") = " + formatta(Math.log10(n)));
-                nuovoNumero = true;
-            });
-        }
+        // Limite lunghezza display
+        if (attuale.length() >= 14) return;
 
-        // CANCELLA
-        Button cancella = findViewById(R.id.cancella);
-        if (cancella != null) {
-            cancella.setOnClickListener(v -> {
-                display.setText("");
-                primoNumero = "";
-                operatore = "";
-                nuovoNumero = false;
-            });
-        }
+        display.append(cifra);
+    }
 
-        // DEL
-        Button elimina = findViewById(R.id.elimina);
-        if (elimina != null) {
-            elimina.setOnClickListener(v -> {
-                String testo = display.getText().toString();
-                if (!testo.isEmpty()) {
-                    display.setText(testo.substring(0, testo.length() - 1));
-                }
-            });
+    private void premiVirgola() {
+        if (dopoUguale) {
+            display.setText("0.");
+            dopoUguale = false;
+            aspettaSecondo = false;
+            return;
+        }
+        if (aspettaSecondo) {
+            display.setText("0.");
+            aspettaSecondo = false;
+            return;
+        }
+        String attuale = display.getText().toString();
+        if (!attuale.contains(".")) {
+            if (attuale.isEmpty()) display.setText("0.");
+            else display.append(".");
         }
     }
 
-    // OPERATORE
-    private void setOperatore(int id, String op) {
-        Button b = findViewById(id);
-        if (b != null) {
-            b.setOnClickListener(v -> {
-                String testo = display.getText().toString();
-                if (!testo.isEmpty()) {
-                    primoNumero = testo;
-                    operatore = op;
+    private void premiOperatore(String nuovoOp) {
+        double valoreCorrente = leggiDisplay();
 
-                    display.setText(primoNumero + " " + operatore + " ");
-                    nuovoNumero = false;
-                }
-            });
+        // Calcolo intermedio se c'è già un'operazione pendente
+        if (!operatore.isEmpty() && !aspettaSecondo && !dopoUguale) {
+            double risultato = eseguiCalcolo(primoNumero, valoreCorrente, operatore);
+            if (Double.isNaN(risultato)) { errore(); return; }
+            mostra(risultato);
+            primoNumero = risultato;
+        } else {
+            primoNumero = valoreCorrente;
+        }
+
+        operatore      = nuovoOp;
+        aspettaSecondo = true;
+        dopoUguale     = false;
+    }
+
+    private void premiUguale() {
+        if (operatore.isEmpty()) return;
+
+        double secondoNumero = aspettaSecondo ? primoNumero : leggiDisplay();
+
+        double risultato = eseguiCalcolo(primoNumero, secondoNumero, operatore);
+        if (Double.isNaN(risultato)) { errore(); return; }
+
+        mostra(risultato);
+        primoNumero    = risultato;
+        operatore      = "";
+        aspettaSecondo = false;
+        dopoUguale     = true;
+    }
+
+    private void premiBack() {
+        // Non cancellare in stati intermedi
+        if (dopoUguale || aspettaSecondo) return;
+
+        String attuale = display.getText().toString();
+        if (attuale.length() <= 1 || attuale.equals("-0")) {
+            display.setText("0");
+        } else {
+            display.setText(attuale.substring(0, attuale.length() - 1));
         }
     }
 
-    // CALCOLO
-    private void calcola() {
-        Double a = parse(primoNumero);
-        Double b = getNumero();
-
-        if (a == null || b == null) return;
-
-        double risultato;
-
-        switch (operatore) {
-            case "+": risultato = a + b; break;
-            case "-": risultato = a - b; break;
-            case "X": risultato = a * b; break;
-            case "/":
-                if (b == 0) { errore(); return; }
-                risultato = a / b;
-                break;
-            case "^":
-                risultato = Math.pow(a, b);
-                break;
-            default: return;
-        }
-
-        display.setText(primoNumero + " " + operatore + " " + formatta(b) + " = " + formatta(risultato));
-
-        primoNumero = "";
-        operatore = "";
-        nuovoNumero = true;
+    private void reset() {
+        primoNumero    = 0;
+        operatore      = "";
+        aspettaSecondo = false;
+        dopoUguale     = false;
+        display.setText("0");
     }
 
-    // PRENDE ULTIMO NUMERO
-    private Double getNumero() {
-        String testo = display.getText().toString();
-
-        if (testo.contains(" ")) {
-            String[] parti = testo.split(" ");
-            try {
-                return Double.parseDouble(parti[parti.length - 1]);
-            } catch (Exception e) {
-                return null;
-            }
+    private double eseguiCalcolo(double a, double b, String op) {
+        switch (op) {
+            case "+": return a + b;
+            case "-": return a - b;
+            case "X": return a * b;
+            case "/": return (b == 0) ? Double.NaN : a / b;
+            case "^": return Math.pow(a, b);
+            default:  return b;
         }
-
-        return parse(testo);
     }
 
-    private Double parse(String s) {
+    private double leggiDisplay() {
         try {
-            return Double.parseDouble(s);
-        } catch (Exception e) {
-            return null;
+            return Double.parseDouble(display.getText().toString());
+        } catch (NumberFormatException e) {
+            return 0;
         }
+    }
+
+    private void mostra(double v) {
+        if (Double.isNaN(v) || Double.isInfinite(v)) { errore(); return; }
+        String testo;
+        if (v == Math.floor(v) && Math.abs(v) < 1e15) {
+            testo = String.valueOf((long) v);
+        } else {
+            // Troncare a 8 cifre significative per evitare rumore floating-point
+            testo = String.format("%.8g", v);
+            // Rimuovere zeri finali inutili (es. "3.50000000" → "3.5")
+            if (testo.contains(".")) {
+                testo = testo.replaceAll("0+$", "").replaceAll("\\.$", "");
+            }
+        }
+        display.setText(testo);
     }
 
     private void errore() {
         display.setText("Errore");
-        nuovoNumero = true;
-    }
-
-    private String formatta(double v) {
-        if (Double.isNaN(v) || Double.isInfinite(v)) return "Errore";
-        if (v == Math.floor(v)) return String.valueOf((long) v);
-        return String.valueOf(v);
-    }
-
-    private long fattoriale(int n) {
-        long r = 1;
-        for (int i = 2; i <= n; i++) r *= i;
-        return r;
+        primoNumero    = 0;
+        operatore      = "";
+        aspettaSecondo = false;
+        dopoUguale     = true;
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/principale"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -206,28 +207,29 @@
         app:layout_constraintVertical_weight="1" />
 
     <!-- RIGA 4: 0 . = (doppio) -->
+
     <Button
         android:id="@+id/t0"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="75dp"
+        android:layout_height="111dp"
         android:layout_margin="4dp"
         android:text="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/virgola"
-        app:layout_constraintTop_toBottomOf="@id/t1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/virgola"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/t1"
         app:layout_constraintVertical_weight="1" />
 
     <Button
         android:id="@+id/virgola"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="71dp"
+        android:layout_height="113dp"
         android:layout_margin="4dp"
         android:text="."
-        app:layout_constraintStart_toEndOf="@id/t0"
-        app:layout_constraintEnd_toStartOf="@id/uguale"
-        app:layout_constraintTop_toBottomOf="@id/t2"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/uguale"
+        app:layout_constraintStart_toEndOf="@id/t0"
+        app:layout_constraintTop_toBottomOf="@id/t2"
         app:layout_constraintVertical_weight="1" />
 
     <!-- = occupa 3 colonne (col 3 + col 4 + col 5) -->
