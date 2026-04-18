@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private EditText display;
-    
+
     private double  primoNumero    = 0;
     private String  operatore      = "";    // "", "+", "-", "X", "/", "^"
     private boolean aspettaSecondo = false; // true = il 2° operando non è ancora stato digitato
